@@ -21,7 +21,7 @@ var loggedIn = false;
 
 
 
-//#region General Functions, regardless of array/affiliation
+//#region These are General Functions, regardless of array/affiliation
 
 function getItemId(column, value, arrayToSearch) {
     var id = arrayToSearch.findIndex(function (e) {
@@ -59,7 +59,7 @@ function deleteItem(columnForGettingId, value, arrayToDeleteFrom) {
 }
 //#endregion
 
-//#region Persons/People Section
+//#region This is the Persons/People Section
 
 function createPerson(firstName, lastName, email, password) {
     var personObject =
@@ -417,6 +417,8 @@ function reduceQuantity(name) {
 
 function clearCart() {
     cartArray = [];
+    console.log('Cart cleared successfully');
+    console.log('');
 }
 
 function checkOut() {
@@ -458,7 +460,7 @@ function checkOut() {
 function viewReceipts() {
     var id = getItemId('email', sessionEmail, peopleArray);
     if (id >= 0) {
-        for (var i = 0; i < peopleArray[id].receipts; i++) {
+        for (var i = 0; i < peopleArray[id].receipts.length; i++) {
             console.log(`Receipt Id: ${i} Number Of Items: ${peopleArray[id].receipts[i].length} Total Amount Paid: ${peopleArray[id].receipts[i].total}`)
         }
     } else {
@@ -519,7 +521,7 @@ createProduct('Pepsi', 200, "beverage");
 
 //#endregion
 
-//#region
+//#region The User Interface /// SACRED!!! ////
 
 console.log('');
 console.log('%cWelcome to T3Commerce. Your Goto app for all types of goods and services.', 'background-color: yellow; color: green;');
@@ -661,7 +663,6 @@ for (var running = 1; running >= 1; running++) {
             }
             break;
 
-        //untested
         case 'clear-cart':
             if (loggedIn) {
                 clearCart();
@@ -691,7 +692,6 @@ for (var running = 1; running >= 1; running++) {
             }
             break;
 
-        //untested
         case 'checkout':
             if (loggedIn) {
                 checkOut();
@@ -701,9 +701,9 @@ for (var running = 1; running >= 1; running++) {
             }
             break;
 
-        //untested
         case 'view-receipts':
             if (loggedIn) {
+                // console.log(peopleArray[0]['receipts']);
                 viewReceipts();
             } else {
                 console.log('>>>>> Login first');
