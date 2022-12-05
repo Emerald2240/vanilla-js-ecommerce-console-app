@@ -490,15 +490,15 @@ function viewReceipts() {
 // createPerson('m', 'm', 'mail', 22);
 // login('mail', 22);
 
-// createProduct('Toothpaste', 1500, "hygiene");
-// createProduct('20 Leaves Notebook', 20, "education");
-// createProduct('Bic Pen', 50, "education");
-// createProduct('Lucky Pen', 30, "hygiene");
-// createProduct('Laptop', '300000', "computer");
-// createProduct('Keyboard', 3000, "computer accessories");
-// createProduct('Mouse', 1500, "computer accessories");
-// createProduct('Kasio Calculator', 2500, "education");
-// createProduct('Pepsi', 200, "beverage");
+createProduct('Toothpaste', 1500, "hygiene");
+createProduct('20 Leaves Notebook', 20, "education");
+createProduct('Bic Pen', 50, "education");
+createProduct('Lucky Pen', 30, "hygiene");
+createProduct('Laptop', '300000', "computer");
+createProduct('Keyboard', 3000, "computer accessories");
+createProduct('Mouse', 1500, "computer accessories");
+createProduct('Kasio Calculator', 2500, "education");
+createProduct('Pepsi', 200, "beverage");
 
 // loadAllGoods();
 
