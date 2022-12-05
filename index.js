@@ -648,7 +648,7 @@ for (var running = 1; running >= 1; running++) {
         case 'remove-from-cart':
             if (loggedIn) {
                 var rfcProductName = prompt('Enter Item Name: ');
-                deleteItem('name', rfcProductName, cartArray);
+                cartArray = deleteItem('name', rfcProductName, cartArray);
             } else {
                 console.log('>>>>> Login first');
                 console.log('');
