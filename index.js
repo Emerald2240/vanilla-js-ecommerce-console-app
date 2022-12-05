@@ -570,8 +570,8 @@ for (var running = 1; running >= 1; running++) {
             var uEmail = prompt('Enter Email Adress: ');
             var uPassword = prompt('Enter password: ');
             var uPassword2 = prompt('Repeat password: ');
-            console.log(uPassword);
-            console.log(uPassword2);
+            // console.log(uPassword);
+            // console.log(uPassword2);
             if (uPassword == uPassword2) {
                 createPerson(uFirstName, uLastName, uEmail, uPassword);
             } else {
