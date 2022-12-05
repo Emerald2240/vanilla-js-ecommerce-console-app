@@ -363,7 +363,7 @@ function addQuantity(name) {
     if (isItemAlreadyInCart(name)) {
         for (var i = 0; i < cartArray.length; i++) {
             if (cartArray[i].name == name) {
-                cartArray[i].quantity += 1;
+                cartArray[i].quantity += parseInt(1);
                 recalculateGrossTotal();
                 console.log('Item quantity added successfully');
                 console.log('');
@@ -400,7 +400,7 @@ function reduceQuantity(name) {
         for (var i = 0; i < cartArray.length; i++) {
             if (cartArray[i].name == name) {
                 if (cartArray[i].quantity > 1) {
-                    cartArray[i].quantity -= 1;
+                    cartArray[i].quantity -= parseInt(1);
                 }
                 recalculateGrossTotal();
                 console.log('Item quantity reduced successfully');
@@ -422,15 +422,16 @@ function clearCart() {
 function checkOut() {
     if (cartArray.length > 0) {
 
-        console.log('%cCongratulations!', 'color: green; background-color: yellow;')
-        console.log('%cYou have successfully paid: ' + cartArray.total + 'Naira', 'color: green; background-color: yellow;');
-        console.log('%cYour item will be delivered to you shortly', 'color: green; background-color: yellow;')
-        console.log('');
 
         receipt = cartArray;
         userId = getItemId('email', sessionEmail, peopleArray);
         if (userId >= 0) {
             if (peopleArray[userId].wallet >= cartArray.total) {
+                console.log('%cCongratulations!', 'color: green; background-color: yellow;')
+                console.log('%cYou have successfully paid: ' + cartArray.total + 'Naira', 'color: green; background-color: yellow;');
+                console.log('%cYour item will be delivered to you shortly', 'color: green; background-color: yellow;')
+                console.log('');
+
                 peopleArray[userId].wallet -= cartArray.total;
                 peopleArray[userId]['receipts'].push(receipt);
             } else {
@@ -670,7 +671,6 @@ for (var running = 1; running >= 1; running++) {
             }
             break;
 
-        //untested
         case 'add-quantity':
             if (loggedIn) {
                 var aqProductName = prompt('Enter Product Name: ');
@@ -681,7 +681,6 @@ for (var running = 1; running >= 1; running++) {
             }
             break;
 
-        //untested
         case 'reduce-quantity':
             if (loggedIn) {
                 var rqProductName = prompt('Enter Item Name: ');
