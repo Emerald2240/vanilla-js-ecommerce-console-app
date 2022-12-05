@@ -287,7 +287,7 @@ function editProduct(name, column, newValue) {
 // console.log(goodsArray);
 //#endregion
 
-//#region This section is for transactions(Cart, reciept etc)
+//#region This section is for transactions(cart, reciept etc)
 
 function addToCart(productId, quantity = 1) {
     var total = 0;
@@ -378,7 +378,9 @@ function reduceQuantity(name) {
     if (isItemAlreadyInCart(name)) {
         for (var i = 0; i < cartArray.length; i++) {
             if (cartArray[i].name == name) {
+                if(cartArray[i].quantity > 1){
                 cartArray[i].quantity -= 1;
+                }
                 recalculateGrossTotal();
                 return true;
             }
@@ -429,18 +431,6 @@ function checkOut() {
     }
 }
 
-function viewReceipts() {
-    var id = getItemId('email', sessionEmail, peopleArray);
-    if (id >= 0) {
-        for (var i = 0; i < peopleArray[id].receipts; i++) {
-            console.log(`Receipt Id: ${i} Number Of Items: ${peopleArray[id].receipts[i].length} Total Amount Paid: ${peopleArray[id].receipts[i].total}`)
-        }
-    } else {
-        console.log('%cUser not found', 'color:red;');
-        console.log('')
-    }
-}
-
 
 // //#region testing testing testing
 // addToCart(1);
@@ -453,51 +443,89 @@ function viewReceipts() {
 
 //#endregion
 
-
-
-
-
-
-
-
-
-
-
-
-
 //#region Program Showcase
 
-createPerson(firstName, lastName, email, password);
-login('orjimichael4886@gmail.com', 123);
-logOut();
+// createPerson(firstName, lastName, email, password);
+// login('orjimichael4886@gmail.com', 123);
+// logOut();
 
-createProduct('Toothpaste', 1500, "hygiene");
-createProduct('20 Leaves Notebook', 20, "education");
-createProduct('Bic Pen', 50, "education");
-createProduct('Lucky Pen', 30, "hygiene");
-createProduct('Laptop', '300000', "computer");
-createProduct('Keyboard', 3000, "computer accessories");
-createProduct('Mouse', 1500, "computer accessories");
-createProduct('Kasio Calculator', 2500, "education");
-createProduct('Pepsi', 200, "beverage");
+// createProduct('Toothpaste', 1500, "hygiene");
+// createProduct('20 Leaves Notebook', 20, "education");
+// createProduct('Bic Pen', 50, "education");
+// createProduct('Lucky Pen', 30, "hygiene");
+// createProduct('Laptop', '300000', "computer");
+// createProduct('Keyboard', 3000, "computer accessories");
+// createProduct('Mouse', 1500, "computer accessories");
+// createProduct('Kasio Calculator', 2500, "education");
+// createProduct('Pepsi', 200, "beverage");
 
-loadAllGoods();
+// loadAllGoods();
 
-addToCart(1);
-addToCart(0, 20);
-addToCart(3);
-addToCart(4);
+// addToCart(1);
+// addToCart(0, 20);
+// addToCart(3);
+// addToCart(4);
 
-cartArray = deleteItem('name', 'Toothpaste', cartArray);
+// cartArray = deleteItem('name', 'Toothpaste', cartArray);
 
-// console.log(cartArray);
-viewCart();
+// // console.log(cartArray);
+// viewCart();
 
-addMoney(400000);
+// addMoney(400000);
 
-checkOut();
+// checkOut();
 
-console.log(peopleArray);
+// console.log(peopleArray);
 
 
 //#endregion
+
+//#region
+
+    console.log('');
+    console.log('%cWelcome to T3Commerce. Your Goto app for all types of goods and services.', 'background-color: yellow; color: green;');
+    console.log('%cGet it? T3.... Task 3... Ecommerce...', 'background-color: yellow; color: green;');
+    console.log('');
+    console.log('%cMoving forward. Our app is very easy to use. There are some commands you can use to navigate the app. You can view this info by typing "info"', 'background-color: yellow; color: green;');
+    console.log('');
+
+for (var running = 1; running >= 1; running++) {
+
+    const prompt = require('prompt-sync')();
+    var command = prompt("Enter Command: ");
+
+    switch (command) {
+        case 'close':
+            running = -1;
+            console.log('Shutting down...');
+            console.log('');
+            break;
+
+        case 'info':
+            console.log("info:                      View all commands and what they do.");
+            console.log("sign-up:                   Fill in some details to register for the app.");
+            console.log('login:                     Fill in your email and password to login and start purchasing.')
+            console.log('fund-wallet:               Fund your account with some virtual money.');
+            console.log('logout:                    Logout from the service.');
+            console.log('delete-account:            Delete your T3Commerce account.');
+            console.log('show-products:             View all available products and their prices.');
+            console.log('show-products-by-category: View all products/goods under a particular category');
+            console.log('view-cart:                 View all items inside cart');
+            console.log('add-to-cart:               Add a specified item to cart.');
+            console.log('remove-from-cart:          Remove a specified item from cart');
+            console.log('clear-cart:                Clear whole cart.');
+            console.log('add-quantity:              Add 1 quantity to product in cart');
+            console.log('reduce-quantity:           Reduce 1 quantity from product in cart');
+
+            console.log('');
+            break;
+
+        default:
+            console.log('Command not recognized.');
+            console.log('');
+            break;
+    }
+
+}
+//#endregion
+

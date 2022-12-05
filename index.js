@@ -3,10 +3,15 @@ var goodsArray = [];
 var cartArray = []
 var receipt = [];
 
-var firstName = "Michael";
-var lastName = "Orji";
-var email = "orjimichael4886@gmail.com";
-var password = "123";
+// var firstName = "Michael";
+// var lastName = "Orji";
+// var email = "orjimichael4886@gmail.com";
+// var password = "123";
+
+var firstName = "";
+var lastName = "";
+var email = "";
+var password = "";
 
 var sessionFirstName = "";
 var sessionLastName = "";
@@ -48,7 +53,8 @@ function deleteItem(columnForGettingId, value, arrayToDeleteFrom) {
         console.log('');
     }
 
-    console.log(`%c${value} Deleted Successfully`, 'color:green;')
+    console.log(`%c${value} Deleted Successfully`, 'color:green;');
+    console.log('');
     return newArray;
 }
 //#endregion
@@ -71,24 +77,24 @@ function createPerson(firstName, lastName, email, password) {
         return false;
     } else {
         peopleArray.push(personObject);
-        console.log(`%cUser: ${firstName} ${lastName}(${email}) created succesfully`, 'color:green; background-color:yellow; font-size:50px;');
+        console.log(`%cUser: ${firstName} ${lastName}(${email}) created succesfully. Now login`, 'color:green; background-color:yellow; font-size:50px;');
         console.log('');
         return true;
     }
 }
 
-function addMoney(amount) {
+function addMoney(amount, email) {
     // var id = peopleArray['email'].indexOf(email);
     var id = getItemId('email', email, peopleArray);
     // console.log(id);
     if (id >= 0) {
-        peopleArray[id]['wallet'] += amount;
+        peopleArray[id]['wallet'] += parseInt(amount);
 
         console.log('Money successfully added to your T3Commerce account, ' + peopleArray[id].first_name)
         console.log('Your new balance is ' + peopleArray[id].wallet + ' Naira')
         console.log('');
     } else {
-        console.log('User not found. Couldnt fund wallet');
+        console.log("User not found. Could'nt fund wallet");
         console.log('');
     }
 }
@@ -115,7 +121,7 @@ function editPerson(column, newValue) {
 }
 
 function deletePerson() {
-    var id = getItemId('email', email, peopleArray);
+    var id = getItemId('email', sessionEmail, peopleArray);
     // console.log(id)
 
     //This is an inbuilt function for deleting values in objects but it doesnt quite reset the index of the array or delete the column entirely. The place is left as undefined. Thats why the rest of the code below was created.
@@ -136,7 +142,9 @@ function deletePerson() {
     }
 
     peopleArray = newPeopleArray;
+    logOut();
     console.log('%cUser Account deleted successfully', 'color:green;')
+    console.log('');
 }
 
 function login(email, password) {
@@ -147,6 +155,10 @@ function login(email, password) {
                 sessionFirstName = peopleArray[i]['first_name'];
                 sessionLastName = peopleArray[i]['last_name'];
                 sessionEmail = peopleArray[i]['email'];
+
+                var firstName = peopleArray[i]['first_name'];
+                var lastName = peopleArray[i]['last_name'];
+                var email = peopleArray[i]['email'];
 
                 loggedIn = true;
                 console.log('Successfully Logged In. Welcome ' + peopleArray[i]['first_name']);
@@ -229,7 +241,7 @@ function doesProductAlreadyExist(name) {
 
 function loadAllGoods() {
     for (var i = 0; i < goodsArray.length; i++) {
-        console.log(`ID[${i}] Name: ${goodsArray[i].name} Price: ${goodsArray[i].price}`);
+        console.log(`ID[${i}] Name: ${goodsArray[i].name}   Price: ${goodsArray[i].price}   Category: ${goodsArray[i].category}`);
     }
     console.log('');
 }
@@ -290,6 +302,9 @@ function editProduct(name, column, newValue) {
 //#region This section is for transactions(cart, reciept etc)
 
 function addToCart(productId, quantity = 1) {
+    if (quantity < 1) {
+        quantity = 1;
+    }
     var total = 0;
     var cartItem = goodsArray[productId];
     cartItem['quantity'] = quantity;
@@ -307,6 +322,8 @@ function addToCart(productId, quantity = 1) {
         }
 
         cartArray['total'] = total;
+        console.log('Item added to cart');
+        console.log('');
         return true;
     }
 
@@ -378,8 +395,8 @@ function reduceQuantity(name) {
     if (isItemAlreadyInCart(name)) {
         for (var i = 0; i < cartArray.length; i++) {
             if (cartArray[i].name == name) {
-                if(cartArray[i].quantity > 1){
-                cartArray[i].quantity -= 1;
+                if (cartArray[i].quantity > 1) {
+                    cartArray[i].quantity -= 1;
                 }
                 recalculateGrossTotal();
                 return true;
@@ -431,6 +448,18 @@ function checkOut() {
     }
 }
 
+function viewReceipts() {
+    var id = getItemId('email', sessionEmail, peopleArray);
+    if (id >= 0) {
+        for (var i = 0; i < peopleArray[id].receipts; i++) {
+            console.log(`Receipt Id: ${i} Number Of Items: ${peopleArray[id].receipts[i].length} Total Amount Paid: ${peopleArray[id].receipts[i].total}`)
+        }
+    } else {
+        console.log('%cUser not found', 'color:red;');
+        console.log('')
+    }
+}
+
 
 // //#region testing testing testing
 // addToCart(1);
@@ -449,15 +478,18 @@ function checkOut() {
 // login('orjimichael4886@gmail.com', 123);
 // logOut();
 
-// createProduct('Toothpaste', 1500, "hygiene");
-// createProduct('20 Leaves Notebook', 20, "education");
-// createProduct('Bic Pen', 50, "education");
-// createProduct('Lucky Pen', 30, "hygiene");
-// createProduct('Laptop', '300000', "computer");
-// createProduct('Keyboard', 3000, "computer accessories");
-// createProduct('Mouse', 1500, "computer accessories");
-// createProduct('Kasio Calculator', 2500, "education");
-// createProduct('Pepsi', 200, "beverage");
+createPerson('m', 'm', 'mail', 22);
+login('mail', 22);
+
+createProduct('Toothpaste', 1500, "hygiene");
+createProduct('20 Leaves Notebook', 20, "education");
+createProduct('Bic Pen', 50, "education");
+createProduct('Lucky Pen', 30, "hygiene");
+createProduct('Laptop', '300000', "computer");
+createProduct('Keyboard', 3000, "computer accessories");
+createProduct('Mouse', 1500, "computer accessories");
+createProduct('Kasio Calculator', 2500, "education");
+createProduct('Pepsi', 200, "beverage");
 
 // loadAllGoods();
 
@@ -482,12 +514,12 @@ function checkOut() {
 
 //#region
 
-    console.log('');
-    console.log('%cWelcome to T3Commerce. Your Goto service for all types of goods and services.', 'background-color: yellow; color: green;');
-    console.log('%cGet it? T3.... Task 3... Ecommerce...', 'background-color: yellow; color: green;');
-    console.log('');
-    console.log('%cMoving forward. Our app is very easy to use. There are some commands you can use to navigate the app. You can view this info by typing "info"', 'background-color: yellow; color: green;');
-    console.log('');
+console.log('');
+console.log('%cWelcome to T3Commerce. Your Goto app for all types of goods and services.', 'background-color: yellow; color: green;');
+console.log('%cGet it? T3.... Task 3... Ecommerce...', 'background-color: yellow; color: green;');
+console.log('');
+console.log('%cMoving forward. Our app is very easy to use. There are some commands you can use to navigate the app. You can view a list of these commands by typing "info"', 'background-color: yellow; color: green;');
+console.log('');
 
 for (var running = 1; running >= 1; running++) {
 
@@ -497,31 +529,186 @@ for (var running = 1; running >= 1; running++) {
     switch (command) {
         case 'close':
             running = -1;
-            console.log('Shutting down...');
+            console.log('>>>>> Shutting down...');
             console.log('');
             break;
 
         case 'info':
-            console.log("info: View all commands and what they do.");
-            console.log("sign-up: Fill in some details to register for the app.");
-            console.log('login: Fill in your email and password to login and start purchasing.')
-            console.log('fund-wallet: fund your account with some virtual money.');
-            console.log('logout: Logout from the service.');
-            console.log('delete-account: Delete your T3Commerce account.');
-            console.log('show-products: View all available products and their prices.');
+            console.log("info:                      View all commands and what they do.");
+            console.log("sign-up:                   Fill in some details to register for the app.");
+            console.log('login:                     Fill in your email and password to login and start purchasing.')
+            console.log('fund-wallet:               Fund your account with some virtual money.');
+            console.log('logout:                    Logout from the service.');
+            console.log('delete-account:            Delete your T3Commerce account.');
+            console.log('show-products:             View all available products and their prices.');
             console.log('show-products-by-category: View all products/goods under a particular category');
-            console.log('view-cart: View all items inside cart');
-            console.log('add-to-cart: Add a specified item to cart.');
-            console.log('remove-from-cart: Remove a specified item from cart');
-            console.log('clear-cart: Clear whole cart.');
-            console.log('add-quantity: Add 1 quantity to product in cart');
-            console.log('reduce-quantity: reduce 1 quantity from product in cart');
+            console.log('view-cart:                 View all items inside cart');
+            console.log('add-to-cart:               Add a specified item to cart.');
+            console.log('remove-from-cart:          Remove a specified item from cart');
+            console.log('clear-cart:                Clear whole cart.');
+            console.log('add-quantity:              Add 1 quantity to product in cart');
+            console.log('reduce-quantity:           Reduce 1 quantity from product in cart');
+            console.log('checkout:                  Make payments for all items in cart.');
+            console.log('view-receipts:             View reciepts of all items bought previously.');
+            console.log('close:                     Close app.');
 
             console.log('');
             break;
 
+        case 'sign-up':
+            var uFirstName = prompt('Enter First Name: ');
+            var uLastName = prompt('Enter Last Name: ');
+            var uEmail = prompt('Enter Email Adress: ');
+            var uPassword = prompt('Enter password: ');
+            var uPassword2 = prompt('Repeat password: ');
+            console.log(uPassword);
+            console.log(uPassword2);
+            if (uPassword == uPassword2) {
+                createPerson(uFirstName, uLastName, uEmail, uPassword);
+            } else {
+                console.log('>>>>> Passwords do not match. Start over');
+                console.log('');
+            }
+            break;
+
+        case 'login':
+            var loginEmail = prompt('Enter Your Email Address: ');
+            var loginPassword = prompt('Enter Password: ');
+            login(loginEmail, loginPassword);
+            break;
+
+        case 'fund-wallet':
+            var fundAmount = prompt('Enter Amount to Deposit: ');
+            if (loggedIn) {
+                addMoney(fundAmount, sessionEmail);
+            } else {
+                console.log('>>>>> Login first');
+                console.log('');
+            }
+            break;
+
+        case 'logout':
+            if (loggedIn) {
+                logOut();
+            } else {
+                console.log('>>>>> Login first');
+                console.log('');
+            }
+            break;
+
+        case 'delete-account':
+            if (loggedIn) {
+                deletePerson();
+            } else {
+                console.log('>>>>> Login first');
+                console.log('');
+            }
+            break;
+
+        case 'show-products':
+            if (loggedIn) {
+                loadAllGoods();
+            } else {
+                console.log('>>>>> Login first');
+                console.log('');
+            }
+            break;
+
+        case 'show-products-by-category':
+            if (loggedIn) {
+                var productCategory = prompt('Enter Desired Product Category: ')
+                loadAllGoodsPerCategory(productCategory);
+            } else {
+                console.log('>>>>> Login first');
+                console.log('');
+            }
+            break;
+
+        case 'view-cart':
+            if (loggedIn) {
+                viewCart();
+            } else {
+                console.log('>>>>> Login first');
+                console.log('');
+            }
+            break;
+
+        case 'add-to-cart':
+            if (loggedIn) {
+                var atcProductId = prompt('Enter Product Id: ');
+                var atcProductQuantity = prompt('Enter Quantity: ');
+                addToCart(atcProductId, atcProductQuantity);
+            } else {
+                console.log('>>>>> Login first');
+                console.log('');
+            }
+            break;
+
+        //untested
+        case 'remove-from-cart':
+            if (loggedIn) {
+                var rfcProductName = prompt('Enter Item Name: ');
+                deleteItem('name', rfcProductName, cartArray);
+            } else {
+                console.log('>>>>> Login first');
+                console.log('');
+            }
+            break;
+
+        //untested
+        case 'clear-cart':
+            if (loggedIn) {
+                clearCart();
+            } else {
+                console.log('>>>>> Login first');
+                console.log('');
+            }
+            break;
+
+        //untested
+        case 'add-quantity':
+            if (loggedIn) {
+                var aqProductName = prompt('Enter Product Name: ');
+                addQuantity(aqProductName);
+            } else {
+                console.log('>>>>> Login first');
+                console.log('');
+            }
+            break;
+
+        //untested
+        case 'reduce-quantity':
+            if (loggedIn) {
+                var rqProductName = prompt('Enter Item Name: ');
+                reduceQuantity(rqProductName);
+            } else {
+                console.log('>>>>> Login first');
+                console.log('');
+            }
+            break;
+
+        //untested
+        case 'checkout':
+            if (loggedIn) {
+                checkOut();
+            } else {
+                console.log('>>>>> Login first');
+                console.log('');
+            }
+            break;
+
+        //untested
+        case 'view-receipts':
+            if (loggedIn) {
+                viewReceipts();
+            } else {
+                console.log('>>>>> Login first');
+                console.log('');
+            }
+            break;
+
         default:
-            console.log('Command not recognized.');
+            console.log('>>>>> Command not recognized.');
             console.log('');
             break;
     }
