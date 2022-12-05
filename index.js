@@ -365,6 +365,8 @@ function addQuantity(name) {
             if (cartArray[i].name == name) {
                 cartArray[i].quantity += 1;
                 recalculateGrossTotal();
+                console.log('Item quantity added successfully');
+                console.log('');
                 return true;
             }
         }
@@ -381,6 +383,8 @@ function setQuantity(name, setQuantity) {
             if (cartArray[i].name == name) {
                 cartArray[i].quantity = setQuantity;
                 recalculateGrossTotal();
+                console.log('Item quantity set successfully');
+                console.log('');
                 return true;
             }
         }
@@ -399,6 +403,8 @@ function reduceQuantity(name) {
                     cartArray[i].quantity -= 1;
                 }
                 recalculateGrossTotal();
+                console.log('Item quantity reduced successfully');
+                console.log('');
                 return true;
             }
         }
@@ -644,7 +650,6 @@ for (var running = 1; running >= 1; running++) {
             }
             break;
 
-        //untested
         case 'remove-from-cart':
             if (loggedIn) {
                 var rfcProductName = prompt('Enter Item Name: ');
